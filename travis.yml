@@ -13,5 +13,10 @@ after_success:
   - docker build -t lukostudy/multi-nginx ./nginx
   - docker build -t lukostudy/multi-server ./server
   - docker build -t lukostudy/multi-worker ./worker
-
-
+  # login to DockerHub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # push images to DockerHub
+  - docker push lukostudy/multi-client
+  - docker push lukostudy/multi-nginx
+  - docker push lukostudy/multi-server
+  - docker push lukostudy/multi-worker
