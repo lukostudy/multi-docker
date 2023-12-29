@@ -4,11 +4,14 @@ services:
 
 before_install:
   - docker build -t lukostudy/react-test -f ./client/Dockerfile.dev ./client
+  # note that we specify relative path ./client for the Dockerfile and the context
 
 script:
   - docker run -e CI=true lukostudy/react-test npm test
 
 after_success:
+  # note that we specify relative path ./client ./nginx ./server ./worker
+  # usually we use . but whis time we run evething from a higher level
   - docker build -t lukostudy/multi-client ./client
   - docker build -t lukostudy/multi-nginx ./nginx
   - docker build -t lukostudy/multi-server ./server
