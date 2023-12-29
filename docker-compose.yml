@@ -22,7 +22,7 @@ services:
       - api
       - client
 
-  api:    # we used to call this service server but it conflicts with nginx file, so we changed to api
+  api:    # we used to call this service 'server' but it conflicts with nginx file, so we changed to api
     build:
       dockerfile: Dockerfile.dev  # no path here
       context: ./server  # here is a working (surce) directory
@@ -35,11 +35,11 @@ services:
       # where we start the environment from
       - REDIS_HOST=redis  # name of the docker-compose service
       - REDIS_PORT=6379
-      - PGUSER=postgres
-      - PGHOST=postgres
-      - PGDATABASE=postgres
-      - PGPASSWORD=postgres_password
-      - PGPORT=5432
+      - PGUSER=postgres # default user for postgres
+      - PGHOST=postgres # here we refer to the service in docker-compose
+      - PGDATABASE=postgres # default db
+      - PGPASSWORD=postgres_password # password set in postgres service above
+      - PGPORT=5432 # default postgres port
 
   client:
     build:
@@ -48,6 +48,8 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
+    environment:
+      - WDS_SOCKET_PORT=0  # issue fix - see video 133
 
   worker:
     build:
