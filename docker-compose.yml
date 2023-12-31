@@ -1,7 +1,7 @@
 version: "3"
 services:
   client:
-    image: "ukostudy/multi-client"
+    image: "lukostudy/multi-client"
     mem_limit: 128m
     hostname: client
   server:
