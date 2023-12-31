@@ -23,3 +23,15 @@ after_success:
   - docker push lukostudy/multi-nginx
   - docker push lukostudy/multi-server
   - docker push lukostudy/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-east-1'
+  app: 'multi-docker-app'
+  env: 'multi-docker-app-env'
+  bucket_name: 'elasticbeanstalk-us-east-1-892173499365'
+  bucket_path: 'docker-multi'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
